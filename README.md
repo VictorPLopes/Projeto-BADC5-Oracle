@@ -218,6 +218,82 @@ Feito isso, é possível se conectar ao banco com o usuário sh_usuario e seleci
     - ![image](https://user-images.githubusercontent.com/77900343/244974581-bfe7bd39-c582-45a0-b617-0b6f4128b836.png)
     - Após a execução do `COMMIT`, os dados são mantidos permanentes (propriedade de durabilidade) e podem ser vistos nas duas instâncias.
 
+# 6. Visões (*views*)
+Visões no Oracle DB funcionam de forma semelhante ao Postgres e desempenham basicamente o mesmo papel: são representações lógicas, de uma ou mais tabelas, ou seja, basicamente uma consulta armazenada. A visão obtém os dados a partir das tabelas bases, que podem ser tabelas ou até mesmos outras visões.
+De modo geral, as visões possibilitam "moldar" a apresentação de determinado dado de diferentes maneiras, para diferentes usuários. Além disso, garantem um nível a mais de segurança, pois restringem o acesso direto a determinadas tuplas de uma tabela, e também contam com a vantagem de poder esconder a complexidade de uma consulta.
+No Oracle, uma visão pode ser criada com o comando `CREATE VIEW nome AS` (onde "nome" é um nome qualquer), seguido de uma consulta (`SELECT`). Assim, toda vez que a visão é buscada, o resultado de seu `SELECT` é retornado.
+
+## Exemplo de *view*
+Para o esquema sh já discutido, a seguinte visão retorna uma lista de todas as vendas cadastradas, bem como informações do custo de cada produto (e qual foi o custo total de cada venda), ou seja, auxilia na visualização dos lucros obtidos com cada venda:
+```sql
+CREATE OR REPLACE VIEW profits
+ AS SELECT 
+  s.channel_id, 
+  s.cust_id, 
+  s.prod_id, 
+  s.promo_id, 
+  s.time_id,
+  c.unit_cost, 
+  c.unit_price, 
+  s.amount_sold, 
+  s.quantity_sold,
+  c.unit_cost * s.quantity_sold TOTAL_COST
+ FROM 
+  costs c, sales s
+ WHERE c.prod_id = s.prod_id
+   AND c.time_id = s.time_id
+   AND c.channel_id = s.channel_id
+   AND c.promo_id = s.promo_id;
+```
+Assim, essas informações de lucros podem ser retornadas com o comando `SELECT * FROM profits;`
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/a5a31d75-3b15-40f9-bae6-963eb5bc21c5)
+
+## Acesso de dados em visões no Oracle DB
+Quando uma visão é referenciada em uma declaração SQL, o Oracle executa os seguintes passos:
+1. Une a query (quando possível) com a visão (que na prática é outra query).
+2. Analisa a instrução unida acima, em uma área SQL compartilhada.
+3. Por fim, executa a declaração SQL.
+### Exemplo dos passos (retirado da documentação da Oracle)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/67edc0a2-7cf7-43f9-b522-acdbe682d8de)
+
+# 7. Visões materializadas (*materialized views*)
+Uma visão materializada é o resultado de uma query que foi armazenado ou "materializado" como um objeto de um schema.
+Algumas características:
+- Elas contêm os dados armazenados e consomem espaço de armazenamento real.
+- Precisam ser atualizadas ou "*refreshed*" quando algo na tabela principal mudar.
+- Melhoram a performance de uma execução SQL quando usadas para operações de reescrita (*query rewrite*).
+No Oracle, as visões materializadas são criadas de forma semelhante às visões, usando o comando `CREATE MATERIALIZED VIEW nome AS` (onde "nome" é um nome qualquer), seguido de uma consulta (`SELECT`). Assim, o resultado desse `SELECT` é armazenado em disco, em outra tabela, e quando é efetuada uma busca na visão materializada, o Oracle retorna as tuplas dessa tabela.
+
+## Exemplo de *materialized view*
+Para o esquema sh já discutido, a seguinte visão materizlizada retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total:
+```sql
+CREATE MATERIALIZED VIEW products_sales_mv
+    AS
+    SELECT    s.prod_id,
+              p.prod_name,
+              SUM(s.quantity_sold) AS units_sold
+    FROM      sales s INNER JOIN products p
+        ON s.prod_id = p.prod_id
+    GROUP BY p.prod_name, s.prod_id;
+```
+Assim, essas informações de vendas podem ser retornadas com o comando `SELECT * FROM products_sales_mv;`
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/51096957-a8c2-41d4-81aa-51a705b3616c)
+
+## Métodos de *Refresh* para Visões Materializadas
+Visões materializadas precisam ser "recarregadas" de tempos em tempos para manter seus dados consistentes no banco. Para isso, no Oracle, existem dois métodos principais:
+- ***Complete Refresh:***
+  Executada ao criar uma visão materializada. Reconstroi a visão materializada por completo. Esse método pode ser lento, especialmente caso o banco de dados precise ler e processar imensas quantidades de dados. Pode ser executado sob demanda com o comando `BEGIN DBMS_SNAPSHOT.REFRESH( '"SCHEMA"."MATERIALIZED_VIEW"','C'); end;` (onde "SCHEMA" e "MATERIALIZED_VIEW" são, respectivamente, os nomes do esquema e da visão materializada).
+- ***Incremental Refresh / Fast Refresh:***
+  Processa apenas as mudanças para dados existentes. Ele elimina a necessidade de "reconstruir" a visão materializada do começo. Pode ser executado sob demanda com o comando `BEGIN DBMS_SNAPSHOT.REFRESH( '"SCHEMA"."MATERIALIZED_VIEW"','F'); end;` (onde "SCHEMA" e "MATERIALIZED_VIEW" são, respectivamente, os nomes do esquema e da visão materializada).
+É possível atualizar visões materializadas por demanda ou em intervalos regulares de tempo. Além disso, é possível criar uma configuração de modo que a cada *commit* de transação de suas tabelas base, a visão seja atualizada.
+
+## *Query Rewrite*
+Essa opção, habilitada com o comando `ENABLE QUERY REWRITE` ao criar uma visão materializada, transforma uma *user request* escrita em termos da tabela principal, localizada no banco, em uma semanticamente equivalente que inclui visões materializadas.
+É sabido que quando o banco possui quantidades gigantescas de dados, realizar uma operação de junção, ou agregação é extremamente custoso em questão de tempo e processamento. Como visões materializadas possuem essas operações pré-computadas, uma query rewrite pode rapidamente atender demandas de outras queries usando visões materializadas.
+A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerando um plano de execução para ambas as *queries*, reescrita e de usuário, e no fim comparando qual tem menor custo para obter os resultados desejados:
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
+
 # Referências (esboço):
 - https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html#GUID-1E645D09-F91F-4BA6-A286-57C5EC66321D
-- 
+- https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html#GUID-6EEA28AC-503B-4526-AD56-85378B547971
+- https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/
