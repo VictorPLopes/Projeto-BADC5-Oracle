@@ -291,6 +291,7 @@ Visões materializadas precisam ser "recarregadas" de tempos em tempos para mant
 Essa opção, habilitada com o comando `ENABLE QUERY REWRITE` ao criar uma visão materializada, transforma uma *user request* escrita em termos da tabela principal, localizada no banco, em uma semanticamente equivalente que inclui visões materializadas.
 É sabido que quando o banco possui quantidades gigantescas de dados, realizar uma operação de junção, ou agregação é extremamente custoso em questão de tempo e processamento. Como visões materializadas possuem essas operações pré-computadas, uma query rewrite pode rapidamente atender demandas de outras queries usando visões materializadas.
 A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerando um plano de execução para ambas as *queries*, reescrita e de usuário, e no fim comparando qual tem menor custo para obter os resultados desejados:
+
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
 
 # Referências (esboço):
