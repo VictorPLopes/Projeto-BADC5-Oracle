@@ -295,6 +295,8 @@ A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerand
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
 
 # 8. Desempenho
+A análise de desempenho no Oracle é de extrema importância, pois o desempenho eficiente de um banco de dados Oracle é essencial para garantir a eficácia e a produtividade das aplicações e dos processos de negócio. Ela permite otimizar consultas, identificar gargalos, melhorar a escalabilidade, monitorar o desempenho e garantir a satisfação do usuário. Tornando possível a tomada de medidas proativas para melhorar o desempenho, maximizar a eficiência e obter o máximo valor do seu banco de dados Oracle.
+
 ## Plano/Relatório de Consulta
 EXPLAIN PLAN: O comando EXPLAIN PLAN é usado para visualizar o plano de execução de uma consulta. Ele mostra a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O EXPLAIN PLAN permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho. Exemplo:
 ```SQL
@@ -302,6 +304,10 @@ EXPLAIN PLAN: O comando EXPLAIN PLAN é usado para visualizar o plano de execuç
     SELECT * FROM tabela;
 ```
 ## Índices
+Os índices são usados no banco de dados Oracle para melhorar o desempenho das consultas e acelerar a recuperação de dados. Eles são estruturas de dados adicionais que armazenam valores de colunas específicas em uma tabela e fornecem um caminho rápido para localizar registros com base nesses valores.
+No entanto, é importante lembrar que a criação de índices também tem algumas considerações. Os índices ocupam espaço em disco e podem afetar o desempenho durante as operações de modificação de dados. Portanto, é necessário encontrar um equilíbrio entre a criação de índices para melhorar o desempenho das consultas e evitar o excesso de índices, que podem ter um impacto negativo no desempenho geral do banco de dados.
+Os principais tipos de índeces no banco de dados Oracle são:
+
 Índice de Chave Única:
 O índice de chave única garante que os valores da coluna indexada sejam exclusivos, sem permitir duplicatas. Ele é criado automaticamente quando você define uma restrição de chave primária ou chave única em uma tabela. Não há necessidade de criar explicitamente um índice de chave única, pois ele é criado automaticamente quando a restrição é definida.
 
