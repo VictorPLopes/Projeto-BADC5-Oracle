@@ -318,6 +318,13 @@ O índice Bitmap é útil para colunas com baixa cardinalidade, ou seja, com um 
 ```SQL
 CREATE BITMAP INDEX index_name ON table_name (column_name);
 ```
+Índice Hash:
+O índice hash é adequado para consultas de igualdade rápida, onde os valores da chave de pesquisa são distribuídos uniformemente. Para criar um índice hash em Oracle, você pode usar o seguinte comando:
+```SQL
+CREATE INDEX index_name
+ON table_name (column_name)
+INDEXTYPE IS HASH;
+```
 Índice de Função:
 O índice de função permite criar um índice em uma expressão ou função aplicada a uma coluna. Isso é útil quando você precisa indexar os resultados de uma função para melhorar o desempenho das consultas. Para criar um índice de função, você pode usar o seguinte comando:
 ```SQL
