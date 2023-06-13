@@ -295,7 +295,7 @@ A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerand
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
 
 # 8. Desempenho
-## plano/relatório de consulta
+## Plano/Relatório de Consulta
 EXPLAIN PLAN: O comando EXPLAIN PLAN é usado para visualizar o plano de execução de uma consulta. Ele mostra a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O EXPLAIN PLAN permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho. Exemplo:
 ```SQL
     EXPLAIN PLAN FOR
@@ -323,7 +323,7 @@ O índice de função permite criar um índice em uma expressão ou função apl
 ```SQL
 CREATE INDEX index_name ON table_name (function_name(column_name));
 ```
-## parâmetros de configuração
+## Parâmetros de Configuração
 Uso de hints:
 Você pode usar hints (sugestões) nas consultas para especificar se um índice deve ser usado ou ignorado pelo otimizador de consultas. Os hints fornecem instruções diretas ao otimizador sobre como executar a consulta. Aqui estão alguns exemplos de hints relacionados a índices:
 + INDEX(table_name index_name) : Força o uso específico de um índice em uma tabela.
@@ -340,7 +340,7 @@ ALTER INDEX index_name UNUSABLE;
 Você pode reativar um índice previamente desativado usando a cláusula "ALTER INDEX" com a opção "REBUILD". Isso reconstruirá o índice e o tornará utilizável novamente pelo otimizador.
 ALTER INDEX index_name REBUILD;
 
-## estatísticas
+## Estatísticas
 Para melhorar o desempenho de um banco de dados Oracle, é essencial manter as estatísticas atualizadas regularmente. As estatísticas são informações sobre a distribuição de dados nas tabelas e índices do banco de dados, e elas são usadas pelo otimizador de consultas para determinar o plano de execução mais eficiente.
 É importante lembrar que a atualização das estatísticas deve ser realizada com cautela e planejamento adequado, especialmente em ambientes de produção. Recomenda-se realizar testes e análises de desempenho antes e depois da atualização das estatísticas para avaliar os impactos no desempenho do banco de dados.
 
