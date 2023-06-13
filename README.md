@@ -294,6 +294,77 @@ A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerand
 
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
 
+# 8. Desempenho
+## plano/relatório de consulta
+EXPLAIN PLAN: O comando EXPLAIN PLAN é usado para visualizar o plano de execução de uma consulta. Ele mostra a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O EXPLAIN PLAN permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho. Exemplo:
+```SQL
+    EXPLAIN PLAN FOR
+    SELECT * FROM tabela;
+```
+## Índices
+Índice de Chave Única:
+O índice de chave única garante que os valores da coluna indexada sejam exclusivos, sem permitir duplicatas. Ele é criado automaticamente quando você define uma restrição de chave primária ou chave única em uma tabela. Não há necessidade de criar explicitamente um índice de chave única, pois ele é criado automaticamente quando a restrição é definida.
+
+Índice de Chave Externa:
+O índice de chave externa é criado automaticamente quando você define uma restrição de chave estrangeira em uma tabela. Ele garante a integridade referencial entre duas tabelas. Assim como o índice de chave única, não é necessário criar explicitamente um índice de chave externa.
+
+Índice B-tree (padrão):
+O índice B-tree é o tipo de índice mais comumente usado no Oracle. Ele é criado automaticamente quando você cria uma restrição de chave primária ou chave estrangeira em uma tabela. No entanto, você também pode criar um índice B-tree explicitamente usando o seguinte comando: 
+```SQL
+CREATE INDEX index_name ON table_name (column_name);
+```
+Índice Bitmap:
+O índice Bitmap é útil para colunas com baixa cardinalidade, ou seja, com um número limitado de valores distintos. Ele usa uma estrutura bitmap para representar os valores dos registros. Para criar um índice bitmap, você pode usar o seguinte comando:
+```SQL
+CREATE BITMAP INDEX index_name ON table_name (column_name);
+```
+Índice de Função:
+O índice de função permite criar um índice em uma expressão ou função aplicada a uma coluna. Isso é útil quando você precisa indexar os resultados de uma função para melhorar o desempenho das consultas. Para criar um índice de função, você pode usar o seguinte comando:
+```SQL
+CREATE INDEX index_name ON table_name (function_name(column_name));
+```
+## parâmetros de configuração
+Uso de hints:
+Você pode usar hints (sugestões) nas consultas para especificar se um índice deve ser usado ou ignorado pelo otimizador de consultas. Os hints fornecem instruções diretas ao otimizador sobre como executar a consulta. Aqui estão alguns exemplos de hints relacionados a índices:
++ INDEX(table_name index_name) : Força o uso específico de um índice em uma tabela.
++ NO_INDEX(table_name index_name) : Instrui o otimizador a ignorar um índice específico em uma tabela.
+
+Uso de parâmetros de sessão:
+Você pode definir os parâmetros de sessão "OPTIMIZER_USE_INVISIBLE_INDEXES" e "OPTIMIZER_IGNORE_HINTS" para controlar o uso de índices em consultas. Esses parâmetros afetam todas as consultas executadas na sessão.
+OPTIMIZER_USE_INVISIBLE_INDEXES: Se definido como "TRUE", permite que o otimizador use índices invisíveis em consultas.
+OPTIMIZER_IGNORE_HINTS: Se definido como "TRUE", instrui o otimizador a ignorar todos os hints nas consultas.
+
+Desativação temporária de índices:
+Você pode desativar temporariamente um índice usando a cláusula "ALTER INDEX" com a opção "UNUSABLE". Isso fará com que o Oracle trate o índice como não utilizável, e o otimizador não o considerará durante a execução das consultas. No entanto, a estrutura do índice ainda é mantida no banco de dados.
+ALTER INDEX index_name UNUSABLE;
+Você pode reativar um índice previamente desativado usando a cláusula "ALTER INDEX" com a opção "REBUILD". Isso reconstruirá o índice e o tornará utilizável novamente pelo otimizador.
+ALTER INDEX index_name REBUILD;
+
+## estatísticas
+Para melhorar o desempenho de um banco de dados Oracle, é essencial manter as estatísticas atualizadas regularmente. As estatísticas são informações sobre a distribuição de dados nas tabelas e índices do banco de dados, e elas são usadas pelo otimizador de consultas para determinar o plano de execução mais eficiente.
+É importante lembrar que a atualização das estatísticas deve ser realizada com cautela e planejamento adequado, especialmente em ambientes de produção. Recomenda-se realizar testes e análises de desempenho antes e depois da atualização das estatísticas para avaliar os impactos no desempenho do banco de dados.
+
+Atualização Automática:
+O Oracle possui um recurso de atualização automática de estatísticas chamado "Automated Maintenance Tasks". Esse recurso pode ser configurado para executar automaticamente a coleta de estatísticas em tabelas e índices em intervalos regulares. Para ativar a atualização automática, você precisa habilitar e configurar o "Automatic Optimizer Statistics Collection". Isso pode ser feito executando os seguintes comandos:
+```SQL
+BEGIN
+  DBMS_AUTO_TASK_ADMIN.ENABLE(
+    client_name     => 'auto optimizer stats collection',
+    operation       => NULL,
+    window_name     => NULL);
+END;
+```
+Procedimento DBMS_STATS.GATHER_DATABASE_STATS:
+O procedimento DBMS_STATS.GATHER_DATABASE_STATS permite coletar estatísticas para todas as tabelas e índices em todo o banco de dados. Ele pode ser executado usando o seguinte comando:
+```SQL
+BEGIN
+  DBMS_STATS.GATHER_DATABASE_STATS(
+    options => 'GATHER AUTO');
+END;
+```
+Procedimento DBMS_STATS.GATHER_TABLE_STATS:
+Você pode usar o procedimento DBMS_STATS.GATHER_TABLE_STATS para coletar estatísticas em tabelas e índices específicos. Isso permite que você tenha um controle mais granular sobre quais objetos deseja atualizar as estatísticas. O seu uso é muito similar ao do procedimento DBMS_STATS.GATHER_DATABASE_STATS.
+
 # Referências (esboço):
 - https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html#GUID-1E645D09-F91F-4BA6-A286-57C5EC66321D
 - https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html#GUID-6EEA28AC-503B-4526-AD56-85378B547971
