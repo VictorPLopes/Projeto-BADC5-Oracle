@@ -395,7 +395,7 @@ DROP INDEX index_name;
 `ALTER INDEX index_name UNUSABLE;`
 É possível reativar um índice previamente desativado usando a cláusula `ALTER INDEX` com a opção `REBUILD`. Isso reconstruirá o índice e o tornará utilizável novamente pelo otimizador: `ALTER INDEX index_name REBUILD;`
 
-## Exemplo
+## Exemplo: Criando um Índice
 Exemplificando criação de índice, plano de consulta e parâmetros de configuração na amostra escolhida.
 Criando índice bitmap na coluna prod_status da tabela products:
 ```SQL
