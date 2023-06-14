@@ -361,6 +361,10 @@ O índice de função permite criar um índice em uma expressão ou função apl
 ```SQL
 CREATE INDEX index_name ON table_name (function_name(column_name));
 ```
+Para excluir um índice no Oracle, você pode usar o comando DROP INDEX. A sintaxe para excluir um índice é a seguinte:
+```SQL
+DROP INDEX index_name;
+```
 
 ## Parâmetros de Configuração
 ### Uso de *hints*:
