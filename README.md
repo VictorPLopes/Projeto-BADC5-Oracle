@@ -406,14 +406,14 @@ Plano de consulta para a selação dos produtos que tem o status = 'AVAILABLE':
 ```SQL
 EXPLAIN PLAN FOR SELECT prod_name, prod_status FROM products WHERE prod_status = 'AVAILABLE';
 ```
-Resultado do plano de consulta com índice ativado:
+Resultado do plano de consulta com índice 'products_prod_status_bix' ativado:
 ![bitmap](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/092a80b8-5df3-42f9-9466-d279d0860de7)
 
 Desativando o índice bitmap criado:
 ```SQL
 ALTER INDEX products_prod_status_bix UNUSABLE;
 ```
-Resultado do plano de consulta com índice ativado:
+Resultado do plano de consulta com índice 'products_prod_status_bix' desativado:
 ![table_access](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/543cf24b-aeb1-4530-911c-5778ffd25f0c)
 
 Recriando o índice bitmap desativado:
