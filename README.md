@@ -318,12 +318,16 @@ A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerand
 A análise de desempenho no Oracle é de extrema importância, pois o desempenho eficiente de um banco de dados Oracle é essencial para garantir a eficácia e a produtividade das aplicações e dos processos de negócio. Ela permite otimizar consultas, identificar gargalos, melhorar a escalabilidade, monitorar o desempenho e garantir a satisfação do usuário. Tornando possível a tomada de medidas proativas para melhorar o desempenho, maximizar a eficiência e obter o máximo valor do seu banco de dados Oracle.
 
 ## Plano/Relatório de Consulta
-EXPLAIN PLAN: O comando `EXPLAIN PLAN` é usado para visualizar o plano de execução de uma consulta. Ele mostra a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O `EXPLAIN PLAN` permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho.
-### Exemplo:
+Ao rodar o comando`EXPLAIN PLAN`, o plano de execução de uma consulta é salvo na tabela `DBMS_XPLAN.DISPLAY`, cujos resultados podem ser vizualizados (usando o comando `SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);`. Esse comando obtem a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O `EXPLAIN PLAN` permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho.
+### Exemplo (usando a visão criada anteriormente):
 ```SQL
-    EXPLAIN PLAN FOR
-    SELECT * FROM tabela;
+    EXPLAIN PLAN FOR SELECT * FROM products_sales;
+    
+    SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 ```
+Assim, o seguinte plano de consulta é mostrado:
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/51f7923e-7b17-4df7-a10b-e4695aff3e59)
+
 ## Índices
 Os índices são usados no banco de dados Oracle para melhorar o desempenho das consultas e acelerar a recuperação de dados. Eles são estruturas de dados adicionais que armazenam valores de colunas específicas em uma tabela e fornecem um caminho rápido para localizar registros com base nesses valores.
 No entanto, é importante lembrar que a criação de índices também tem algumas considerações. Os índices ocupam espaço em disco e podem afetar o desempenho durante as operações de modificação de dados. Portanto, é necessário encontrar um equilíbrio entre a criação de índices para melhorar o desempenho das consultas e evitar o excesso de índices, que podem ter um impacto negativo no desempenho geral do banco de dados.
