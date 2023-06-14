@@ -191,6 +191,10 @@ Uma transação pode começar implicitamente ao ser nomeada, usando o comando SQ
     GRANT SELECT ON sh.SALES TO sh_usuario;
     GRANT SELECT ON sh.SUPPLEMENTARY_DEMOGRAPHICS TO sh_usuario;
     GRANT SELECT ON sh.TIMES TO sh_usuario;
+    GRANT SELECT ON sh.PRODUCTS_SALES TO sh_usuario;
+    GRANT SELECT ON sh.PROFITS TO sh_usuario;
+    GRANT SELECT ON sh.PRODUCTS_SALES_MV TO sh_usuario;
+    GRANT SELECT ON sh.TIMES TO sh_usuario;
 
     GRANT INSERT ON sh.sales to sh_usuario;
     GRANT INSERT ON sh.channels to sh_usuario;
@@ -248,6 +252,22 @@ CREATE OR REPLACE VIEW profits
 Assim, essas informações de lucros podem ser retornadas com o comando `SELECT * FROM profits;`
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/a5a31d75-3b15-40f9-bae6-963eb5bc21c5)
 
+## Outro exemplo de *view*
+Para o esquema sh já discutido, a seguinte visão retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total:
+```sql
+CREATE OR REPLACE VIEW products_sales
+    AS
+    SELECT    s.prod_id,
+              p.prod_name,
+              SUM(s.quantity_sold) AS units_sold
+    FROM      sales s INNER JOIN products p
+        ON s.prod_id = p.prod_id
+    GROUP BY p.prod_name, s.prod_id
+    ORDER BY s.prod_id;
+```
+Assim, essas informações de vendas podem ser retornadas com o comando `SELECT * FROM products_sales;`
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/0fa44d97-560a-467f-aff5-d804e2b72600)
+
 ## Acesso de dados em visões no Oracle DB
 Quando uma visão é referenciada em uma declaração SQL, o Oracle executa os seguintes passos:
 1. Une a query (quando possível) com a visão (que na prática é outra query).
@@ -265,7 +285,7 @@ Algumas características:
 No Oracle, as visões materializadas são criadas de forma semelhante às visões, usando o comando `CREATE MATERIALIZED VIEW nome AS` (onde "nome" é um nome qualquer), seguido de uma consulta (`SELECT`). Assim, o resultado desse `SELECT` é armazenado em disco, em outra tabela, e quando é efetuada uma busca na visão materializada, o Oracle retorna as tuplas dessa tabela.
 
 ## Exemplo de *materialized view*
-Para o esquema sh já discutido, a seguinte visão materizlizada retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total:
+Para o esquema sh já discutido, a seguinte visão materizlizada retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total. A consulta é exatamente igual à visão `products_sales`, porém é uma visão materializada, que armazena esses resultados em uma tabela:
 ```sql
 CREATE MATERIALIZED VIEW products_sales_mv
     AS
@@ -274,10 +294,11 @@ CREATE MATERIALIZED VIEW products_sales_mv
               SUM(s.quantity_sold) AS units_sold
     FROM      sales s INNER JOIN products p
         ON s.prod_id = p.prod_id
-    GROUP BY p.prod_name, s.prod_id;
+    GROUP BY p.prod_name, s.prod_id
+    ORDER BY s.prod_id;
 ```
 Assim, essas informações de vendas podem ser retornadas com o comando `SELECT * FROM products_sales_mv;`
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/51096957-a8c2-41d4-81aa-51a705b3616c)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/cfab2801-968d-4e1c-8793-411fdde9aa5a)
 
 ## Métodos de *Refresh* para Visões Materializadas
 Visões materializadas precisam ser "recarregadas" de tempos em tempos para manter seus dados consistentes no banco. Para isso, no Oracle, existem dois métodos principais:
