@@ -1,13 +1,30 @@
+# Trabalho de Banco de Dados 2
+## Tema: Oracle DB
+### Conteúdos: transações, visões, visões materializadas e desempenho
+
 # Nomes dos integrantes
-- Allan Bastos
-- Lucas padilha
-- Mateus Carvalho
-- Victor Lopes
+- [Allan Bastos](mailto:allan.bastos@aluno.ifsp.edu.br)
+- [Lucas Padilha](mailto:mateus.lucas1@aluno.ifsp.edu.br)
+- [Mateus Carvalho](mailto:lucas.padilha@aluno.ifsp.edu.br)
+- [Victor Lopes](mailto:victor.probio@aluno.ifsp.edu.br)
+
+# Sumário
+1. [Definição do Banco de Dados](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#1-defini%C3%A7%C3%A3o-do-banco-de-dados)
+2. [Análise da Viabilidade](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#2-an%C3%A1lise-da-viabilidade)
+3. [Definição do Esquema e Carga de Dados](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#3-defini%C3%A7%C3%A3o-do-esquema-e-carga-de-dados)
+4. [Consultas Simples](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#4-consultas-simples)
+5. [Transações](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#5-transa%C3%A7%C3%B5es)
+6. [Visões (views)](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#6-vis%C3%B5es-views)
+7. [Visões materializadas (materialized views)](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#7-vis%C3%B5es-materializadas-materialized-views)
+8. [Desempenho](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#8-desempenho)
 
 # 1. Definição do Banco de Dados
 Como base de dados, o grupo optou por selecionar uma amostra fornecida pela própria Oracle para o Oracle DB, com documentação disponível no [site da empresa](https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html#GUID-1E645D09-F91F-4BA6-A286-57C5EC66321D). Várias amostras estão disponíveis, cada uma com um propósito de testes diferente, mas que podem ser utilizadas de forma independente. O banco de dados escolhido foi o esquema “Sales History”, que foi projetado para demonstrações com grandes quantidades de dados. Tal escolha se baseou no conteúdo do projeto, que trata sobre visões, [visões materializadas](https://ead.prc.ifsp.edu.br/mod/resource/view.php?id=28236) e desempenho, tornando um esquema grande um candidato ideal para as atividades. O repositório do banco se encontra [no GitHub](https://github.com/oracle-samples/db-sample-schemas/tree/main/sales_history), e a versão utilizada foi a mais recente: 23c. Os testes iniciais com os computadores do laboratório usavam a versão 18c do Oracle DB. Embora a versão da base de dados usada não seja oficialmente compatível com a versão instalada do banco (18c), os testes realizados pelo grupo concluíram que os scripts podem ser executados sem problemas. A versão mais nova foi escolhida no lugar da versão oficialmente compatível com o Oracle DB mais antigo por duas razões: na versão mais antiga do banco, todos os esquemas de amostras precisam ser instalados juntos (já na mais nova cada um é independente), e o processo de instalação antigo é demorado e trabalhoso, precisando também de alterações manuais para cada computador onde os esquemas precisam ser instalados.
 No final, levar em consideração a versão do Oracle DB compatível com os computadores do laboratório tornou-se irrelevante, algo explicado melhor mais adiante.
 Por ser uma amostra com uma quantidade de dados extremamente volumosa, a parte de carregamento de dados é dividida em dois formatos: uma parte é inserida no próprio arquivo SQL, e outras dependem de arquivos CSV que vêm inclusos ao realizar o download do repositório da amostra.
+
+### Resumindo:
+O software usado foi o Oracle DB 21c, enquanto o banco de dados escolhido foi a amostra oficial da Oracle "Sales History", em sua versão 23c.
 
 # 2. Análise da Viabilidade
 Quanto a análise da viabilidade, no dia 08/05/2023, foi realizado um teste de instalação do banco nos computadores do laboratório. O principal problema encontrado foi uma incompatibilidade da versão mais recente (21c) do Oracle DB com o Windows 7 instalados nas máquinas.
@@ -16,10 +33,13 @@ O grupo estudou a possibilidade de hospedar o banco em algum sistema de nuvem, p
 A escolha do serviço AWS foi realizada, e após dias de dificuldades com a execução do script no banco, esse foi importado com sucesso para a nuvem. Porém, o grupo descobriu da pior forma possível, na aula do dia 05/06/2023, que o serviço gratuito do AWS, não era gratuito (pelo menos não para Oracle). Assim, surgiu uma outra ideia: rodar o banco em uma máquina pessoal na rede do Instituto Federal, e usar apenas o DBeaver nas outras máquinas para se conectar ao servidor.
 Essa ideia foi testada com sucesso no mesmo dia, e até agora se provou como a melhor opção em todos os quesitos: é gratuita, fácil de configurar, possui controle ilimitado, não depende da internet para funcionar, é rápida de configurar em uma nova máquina, não precisa de nenhum software adicional nos outros computadores alem do DBeaver e possibilita executar a última versão do Oracle DB (21c) no servidor e a versão mais atual do script, evitando a necessidade de utilizar as versões mais antigas dos softwares por conta das limitações do laboratório.
 
+### Resumindo:
+Uma máquina pessoal será usada como servidor, executando a versão 21c do Oracle DB. Os clientes se conectarão usando o DBeaver.
+
 # 3. Definição do Esquema e Carga de Dados
 ## Foram anotadas as instruções executadas no computador servidor para instalar o banco e carregar nele os dados. Os arquivos necessários foram baixados e reunidos em uma pasta, contendo as subpastas descritas nas instruções:
 1. **Preparação:**
-    - Copiar as pastas "Banco", "OracleXE18" e "Programas" para alguma pasta "segura" no computador.
+    - Copiar as pastas "Banco", "OracleXE21" e "Programas" para alguma pasta "segura" no computador.
 2. **Instalação do Oracle DB 18c:**
     - Abrir a pasta "OracleXE18" e executar o arquivo "setup.exe";
     - Prosseguir com a instalação normalmente, definindo uma senha quando solicitado;
@@ -204,7 +224,7 @@ Uma transação pode começar implicitamente ao ser nomeada, usando o comando SQ
     GRANT INSERT ON sh.sales to sh_usuario;
     GRANT INSERT ON sh.channels to sh_usuario;
     ```
-6. Criar uma nova conexão usando os seguintes parámetros:
+6. Criar uma nova conexão usando os seguintes parâmetros:
     - Username: sh_usuario
     - Password: usuario
     - Hostname: [IP DO SERVIDOR]
