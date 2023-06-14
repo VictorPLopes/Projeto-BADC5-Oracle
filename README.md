@@ -328,6 +328,10 @@ Ao rodar o comando`EXPLAIN PLAN`, o plano de execução de uma consulta é salvo
 Assim, o seguinte plano de consulta é mostrado:
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/51f7923e-7b17-4df7-a10b-e4695aff3e59)
 
+Usando o DBeaver, também é possível selecionar a consulta desejada, clicar com o botão direito sobre ela, e selecionar *Execute > Explain Execution Plan* para obter o plano de execução de uma consulta:
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/43db8466-65c3-45d0-9c25-5ac2159e5f6e)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/22c0387f-0c73-4fe6-b3df-9edcaacdfbfa)
+
 ## Índices
 Os índices são usados no banco de dados Oracle para melhorar o desempenho das consultas e acelerar a recuperação de dados. Eles são estruturas de dados adicionais que armazenam valores de colunas específicas em uma tabela e fornecem um caminho rápido para localizar registros com base nesses valores.
 No entanto, é importante lembrar que a criação de índices também tem algumas considerações. Os índices ocupam espaço em disco e podem afetar o desempenho durante as operações de modificação de dados. Portanto, é necessário encontrar um equilíbrio entre a criação de índices para melhorar o desempenho das consultas e evitar o excesso de índices, que podem ter um impacto negativo no desempenho geral do banco de dados.
