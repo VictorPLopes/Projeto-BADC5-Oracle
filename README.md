@@ -418,6 +418,57 @@ END;
 ### Procedimento DBMS_STATS.GATHER_TABLE_STATS:
 É possível usar o procedimento `DBMS_STATS.GATHER_TABLE_STATS` para coletar estatísticas em tabelas e índices específicos. Isso permite que você tenha um controle mais granular sobre quais objetos deseja atualizar as estatísticas. O seu uso é muito similar ao do procedimento `DBMS_STATS.GATHER_DATABASE_STATS`.
 
+## Comparação de Desempenho: Visão X Visão Materializada
+Usando os conceitos relatório de plano de execução, é possível comparar o custo da visão e da visão materializada que foram criadas.
+### Exemplo:
+Para exibir o plano de execução da visão products_sales, é possível rodar o seguinte comando:
+```SQL
+EXPLAIN PLAN FOR SELECT * FROM products_sales;
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+```
+Que retorna o seguinte resultado:
+```
+Plan hash value: 2879616603
+
+-----------------------------------------------------------------------------------------------------------
+| Id  | Operation                | Name           | Rows  | Bytes | Cost (%CPU)| Time     | Pstart| Pstop |
+-----------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT         |                |    72 |  3816 |  3900   (3)| 00:00:01 |       |       |
+|   1 |  VIEW                    | PRODUCTS_SALES |    72 |  3816 |  3900   (3)| 00:00:01 |       |       |
+|   2 |   MERGE JOIN             |                |    72 |  3168 |  3900   (3)| 00:00:01 |       |       |
+|   3 |    SORT JOIN             |                |    72 |  1224 |  3896   (3)| 00:00:01 |       |       |
+|   4 |     VIEW                 | VW_GBC_6       |    72 |  1224 |  3896   (3)| 00:00:01 |       |       |
+|   5 |      HASH GROUP BY       |                |    72 |   504 |  3896   (3)| 00:00:01 |       |       |
+|   6 |       PARTITION RANGE ALL|                |   918K|  6281K|  3839   (1)| 00:00:01 |     1 |    15 |
+|   7 |        TABLE ACCESS FULL | SALES          |   918K|  6281K|  3839   (1)| 00:00:01 |     1 |    15 |
+|*  8 |    SORT JOIN             |                |    72 |  1944 |     4  (25)| 00:00:01 |       |       |
+|   9 |     TABLE ACCESS FULL    | PRODUCTS       |    72 |  1944 |     3   (0)| 00:00:01 |       |       |
+-----------------------------------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   8 - access("ITEM_1"="P"."PROD_ID")
+       filter("ITEM_1"="P"."PROD_ID")
+```
+Já para a visão materializada (que retorna a mesma consulta) products_sales_mv, o comando a ser executado para analisar o plano de execução é:
+```SQL
+EXPLAIN PLAN FOR SELECT * FROM products_sales_mv;
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+```
+Que por sua vez retorna:
+```
+Plan hash value: 3783523653
+ 
+------------------------------------------------------------------------------------------
+| Id  | Operation            | Name              | Rows  | Bytes | Cost (%CPU)| Time     |
+------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT     |                   |    72 |  2304 |     3   (0)| 00:00:01 |
+|   1 |  MAT_VIEW ACCESS FULL| PRODUCTS_SALES_MV |    72 |  2304 |     3   (0)| 00:00:01 |
+------------------------------------------------------------------------------------------
+```
+Assim, fica claro que a diferença entre ambas é bem grande. O custo da visão chegou a 3900, com um uso máximo de CPU de 25%. Enquanto isso, o custo máximo da visão materializada foi de apenas 3, sem uso significativo de CPU.
+
 # Referências (esboço):
 - https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html#GUID-1E645D09-F91F-4BA6-A286-57C5EC66321D
 - https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html#GUID-6EEA28AC-503B-4526-AD56-85378B547971
