@@ -395,6 +395,32 @@ DROP INDEX index_name;
 `ALTER INDEX index_name UNUSABLE;`
 É possível reativar um índice previamente desativado usando a cláusula `ALTER INDEX` com a opção `REBUILD`. Isso reconstruirá o índice e o tornará utilizável novamente pelo otimizador: `ALTER INDEX index_name REBUILD;`
 
+## Exemplo
+Exemplificando criação de índice, plano de consulta e parâmetros de configuração na amostra escolhida.
+Criando índice bitmap na coluna prod_status da tabela products:
+```SQL
+CREATE BITMAP INDEX products_prod_status_bix
+   ON products(prod_status);
+```
+Plano de consulta para a selação dos produtos que tem o status = 'AVAILABLE':
+```SQL
+EXPLAIN PLAN FOR SELECT prod_name, prod_status FROM products WHERE prod_status = 'AVAILABLE';
+```
+Resultado do plano de consulta com índice ativado:
+![bitmap](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/092a80b8-5df3-42f9-9466-d279d0860de7)
+
+Desativando o índice bitmap criado:
+```SQL
+ALTER INDEX products_prod_status_bix UNUSABLE;
+```
+Resultado do plano de consulta com índice ativado:
+![table_access](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/543cf24b-aeb1-4530-911c-5778ffd25f0c)
+
+Recriando o índice bitmap desativado:
+```SQL
+ALTER INDEX products_prod_status_bix REBUILD;
+```
+
 ## Estatísticas
 Para melhorar o desempenho de um banco de dados Oracle, é essencial manter as estatísticas atualizadas regularmente. As estatísticas são informações sobre a distribuição de dados nas tabelas e índices do banco de dados, e elas são usadas pelo otimizador de consultas para determinar o plano de execução mais eficiente.
 É importante lembrar que a atualização das estatísticas deve ser realizada com cautela e planejamento adequado, especialmente em ambientes de produção. Recomenda-se realizar testes e análises de desempenho antes e depois da atualização das estatísticas para avaliar os impactos no desempenho do banco de dados.
