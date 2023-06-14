@@ -194,7 +194,6 @@ Uma transação pode começar implicitamente ao ser nomeada, usando o comando SQ
     GRANT SELECT ON sh.PRODUCTS_SALES TO sh_usuario;
     GRANT SELECT ON sh.PROFITS TO sh_usuario;
     GRANT SELECT ON sh.PRODUCTS_SALES_MV TO sh_usuario;
-    GRANT SELECT ON sh.TIMES TO sh_usuario;
 
     GRANT INSERT ON sh.sales to sh_usuario;
     GRANT INSERT ON sh.channels to sh_usuario;
