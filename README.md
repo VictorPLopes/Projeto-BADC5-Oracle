@@ -527,7 +527,9 @@ Plan hash value: 3783523653
 ```
 Assim, fica claro que a diferença entre ambas é bem grande. O custo da visão chegou a 3900, com um uso máximo de CPU de 25%. Enquanto isso, o custo máximo da visão materializada foi de apenas 3, sem uso significativo de CPU.
 
-# Referências (esboço):
-- https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html#GUID-1E645D09-F91F-4BA6-A286-57C5EC66321D
-- https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html#GUID-6EEA28AC-503B-4526-AD56-85378B547971
+# Referências:
+- https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html
+- https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html
 - https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/
+- https://www.youtube.com/watch?v=T7V8fgwtRB4
+- https://www.devmedia.com.br/artigo-da-sql-magazine-36-indices-no-oracle-parte-i/6835
