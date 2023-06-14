@@ -394,6 +394,7 @@ BEGIN
     operation       => NULL,
     window_name     => NULL);
 END;
+/
 ```
 
 ### Procedimento DBMS_STATS.GATHER_DATABASE_STATS:
@@ -403,6 +404,7 @@ BEGIN
   DBMS_STATS.GATHER_DATABASE_STATS(
     options => 'GATHER AUTO');
 END;
+/
 ```
 
 ### Procedimento DBMS_STATS.GATHER_TABLE_STATS:
