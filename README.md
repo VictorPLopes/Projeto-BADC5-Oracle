@@ -397,6 +397,7 @@ DROP INDEX index_name;
 
 ## Exemplo: Criando um Índice
 Exemplificando criação de índice, plano de consulta e parâmetros de configuração na amostra escolhida.
+
 Criando índice bitmap na coluna prod_status da tabela products:
 ```SQL
 CREATE BITMAP INDEX products_prod_status_bix
@@ -416,7 +417,7 @@ ALTER INDEX products_prod_status_bix UNUSABLE;
 Resultado do plano de consulta com índice 'products_prod_status_bix' desativado:
 ![table_access](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/543cf24b-aeb1-4530-911c-5778ffd25f0c)
 
-Recriando o índice bitmap desativado:
+Reativando o índice bitmap products_prod_status_bix:
 ```SQL
 ALTER INDEX products_prod_status_bix REBUILD;
 ```
