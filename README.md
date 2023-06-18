@@ -284,7 +284,7 @@ CREATE OR REPLACE VIEW profits
    AND c.promo_id = s.promo_id;
 ```
 Assim, essas informações de lucros podem ser retornadas com o comando `SELECT * FROM profits;`
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/a5a31d75-3b15-40f9-bae6-963eb5bc21c5)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/f7ed397b-98bd-49f3-963e-b574fb672224)
 
 ## Outro exemplo de *view*
 Para o esquema sh já discutido, a seguinte visão retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total:
@@ -300,7 +300,7 @@ CREATE OR REPLACE VIEW products_sales
     ORDER BY s.prod_id;
 ```
 Assim, essas informações de vendas podem ser retornadas com o comando `SELECT * FROM products_sales;`
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/0fa44d97-560a-467f-aff5-d804e2b72600)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/d9a5d113-0704-462c-8968-92c4325228da)
 
 ## Acesso de dados em visões no Oracle DB
 Quando uma visão é referenciada em uma declaração SQL, o Oracle executa os seguintes passos:
@@ -308,7 +308,7 @@ Quando uma visão é referenciada em uma declaração SQL, o Oracle executa os s
 2. Analisa a instrução unida acima, em uma área SQL compartilhada.
 3. Por fim, executa a declaração SQL.
 ### Exemplo dos passos (retirado da documentação da Oracle)
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/67edc0a2-7cf7-43f9-b522-acdbe682d8de)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/ffff92e5-94fd-4bba-bf85-fbf7c5be2979)
 
 # 7. Visões materializadas (*materialized views*)
 Uma visão materializada é o resultado de uma query que foi armazenado ou "materializado" como um objeto de um schema.
@@ -332,7 +332,7 @@ CREATE MATERIALIZED VIEW products_sales_mv
     ORDER BY s.prod_id;
 ```
 Assim, essas informações de vendas podem ser retornadas com o comando `SELECT * FROM products_sales_mv;`
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/cfab2801-968d-4e1c-8793-411fdde9aa5a)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/ef602514-8142-4b55-a8d2-6017cdf067b0)
 
 ## Métodos de *Refresh* para Visões Materializadas
 Visões materializadas precisam ser "recarregadas" de tempos em tempos para manter seus dados consistentes no banco. Para isso, no Oracle, existem dois métodos principais:
@@ -347,7 +347,7 @@ Essa opção, habilitada com o comando `ENABLE QUERY REWRITE` ao criar uma visã
 É sabido que quando o banco possui quantidades gigantescas de dados, realizar uma operação de junção, ou agregação é extremamente custoso em questão de tempo e processamento. Como visões materializadas possuem essas operações pré-computadas, uma query rewrite pode rapidamente atender demandas de outras queries usando visões materializadas.
 A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerando um plano de execução para ambas as *queries*, reescrita e de usuário, e no fim comparando qual tem menor custo para obter os resultados desejados:
 
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
+![image](https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/img/cncpt334.gif)
 
 # 8. Desempenho
 A análise de desempenho no Oracle é de extrema importância, pois o desempenho eficiente de um banco de dados Oracle é essencial para garantir a eficácia e a produtividade das aplicações e dos processos de negócio. Ela permite otimizar consultas, identificar gargalos, melhorar a escalabilidade, monitorar o desempenho e garantir a satisfação do usuário. Tornando possível a tomada de medidas proativas para melhorar o desempenho, maximizar a eficiência e obter o máximo valor do seu banco de dados Oracle.
@@ -361,11 +361,11 @@ Ao rodar o comando`EXPLAIN PLAN`, o plano de execução de uma consulta é salvo
     SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
 ```
 Assim, o seguinte plano de consulta é mostrado:
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/51f7923e-7b17-4df7-a10b-e4695aff3e59)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7599163a-9305-4301-b9f1-eca057e860af)
 
 Usando o DBeaver, também é possível selecionar a consulta desejada, clicar com o botão direito sobre ela, e selecionar *Execute > Explain Execution Plan* para obter o plano de execução de uma consulta:
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/43db8466-65c3-45d0-9c25-5ac2159e5f6e)
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/22c0387f-0c73-4fe6-b3df-9edcaacdfbfa)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/94602ec5-8dbb-40cf-898f-52a79f984959)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/2f46f9fa-0a85-4598-a613-b1c8699a1da8)
 
 ## Índices
 Os índices são usados no banco de dados Oracle para melhorar o desempenho das consultas e acelerar a recuperação de dados. Eles são estruturas de dados adicionais que armazenam valores de colunas específicas em uma tabela e fornecem um caminho rápido para localizar registros com base nesses valores.
@@ -427,7 +427,7 @@ DROP INDEX index_name;
 ## Exemplo: Criando um Índice
 Exemplificando criação de índice, plano de consulta e parâmetros de configuração na amostra escolhida.
 
-Criando índice bitmap na coluna prod_status da tabela products:
+Criando índice bitmap na coluna prod_status da tabela products (criado por padrão ao rodar o script):
 ```SQL
 CREATE BITMAP INDEX products_prod_status_bix
    ON products(prod_status);
@@ -437,14 +437,14 @@ Plano de consulta para a selação dos produtos que tem o status = 'AVAILABLE':
 EXPLAIN PLAN FOR SELECT prod_name, prod_status FROM products WHERE prod_status = 'AVAILABLE';
 ```
 Resultado do plano de consulta com índice 'products_prod_status_bix' ativado:
-![bitmap](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/092a80b8-5df3-42f9-9466-d279d0860de7)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/f0529107-e0dc-4e24-8172-96b032c02869)
 
 Desativando o índice bitmap criado:
 ```SQL
 ALTER INDEX products_prod_status_bix UNUSABLE;
 ```
 Resultado do plano de consulta com índice 'products_prod_status_bix' desativado:
-![table_access](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/81163127/543cf24b-aeb1-4530-911c-5778ffd25f0c)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/e969cbd5-f213-4dbd-8c8a-61eb6643aa6b)
 
 Reativando o índice bitmap products_prod_status_bix:
 ```SQL
@@ -532,8 +532,8 @@ Plan hash value: 3783523653
 Assim, fica claro que a diferença entre ambas é bem grande. O custo da visão chegou a 3900, com um uso máximo de CPU de 25%. Enquanto isso, o custo máximo da visão materializada foi de apenas 3, sem uso significativo de CPU.
 
 # Referências:
-- https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html
-- https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html
-- https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/
-- https://www.youtube.com/watch?v=T7V8fgwtRB4
-- https://www.devmedia.com.br/artigo-da-sql-magazine-36-indices-no-oracle-parte-i/6835
+- SRINIVAS, Apoorva. **Installation of the Sample Schemas**. Oracle Help Center. Disponível em: <https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html>. Acesso em: 18 jun. 2023.
+- KUSH, Frederick; HERMANN BAER, Mark Bauer; POTINENI, Padmaja. **Refreshing Materialized Views**. Oracle Help Center. Disponível em: <https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html>. Acesso em: 18 jun. 2023.
+- ASHDOWN, Lance; KEESLING, Donna; KYTE, Tom. **Database Concepts**. Oracle Help Center. Disponível em: <https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/>. Acesso em: 18 jun. 2023.
+- **Oracle Database Transactions| Oracle Transactions | COMMIT, ROLLBACK, SAVEPOINT | Oracle Tutorial**. [s.l.: s.n.], 2022. Disponível em: <https://www.youtube.com/watch?v=T7V8fgwtRB4>. Acesso em: 18 jun. 2023.
+- **Artigo da SQL Magazine 36 - Índices no Oracle - Parte I**. DevMedia. Disponível em: <https://www.devmedia.com.br/artigo-da-sql-magazine-36-indices-no-oracle-parte-i/6835>. Acesso em: 18 jun. 2023.
