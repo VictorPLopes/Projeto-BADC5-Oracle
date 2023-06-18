@@ -37,22 +37,24 @@ Essa ideia foi testada com sucesso no mesmo dia, e até agora se provou como a m
 Uma máquina pessoal será usada como servidor, executando a versão 21c do Oracle DB. Os clientes se conectarão usando o DBeaver.
 
 # 3. Definição do Esquema e Carga de Dados
-## Foram anotadas as instruções executadas no computador servidor para instalar o banco e carregar nele os dados. Os arquivos necessários foram baixados e reunidos em uma pasta, contendo as subpastas descritas nas instruções:
+## Foram anotadas as instruções executadas no computador servidor para instalar o banco e carregar nele os dados:
 1. **Preparação:**
-    - Copiar as pastas "Banco", "OracleXE21" e "Programas" para alguma pasta "segura" no computador.
+    - [Baixar o Oracle Express Edition 21c](https://www.oracle.com/database/technologies/xe-downloads.html), os [esquemas de demonstração em sua versão 23c](https://github.com/oracle-samples/db-sample-schemas/archive/refs/tags/v23.1.zip), [o SQLcl 23.1](https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip), [o SQLDeveloper](https://www.oracle.com/database/sqldeveloper/technologies/download/) e salvar seus arquivos em alguma pasta "segura" no computador;
+    - Extrair os conteúdos do arquivo zip do Oracle Express para uma pasta qualquer "OracleXE21" (ou algum outro nome);
+    - Abrir o arquivo zip do esquema, a pasta "db-sample-schemas-23.1" e extrair a subpasta "sales_history" para uma pasta qualquer no computador (nesse exemplo, dentro de uma pasta qualquer chamada "Banco");
+    - Extrair os conteúdos do arquivo zip do SQLcl para uma pasta qualquer (nesse exemplo uma pasta chamada "Programas").
+    - Extrair os conteúdos do arquivo zip do SQLDeveloper para uma pasta qualquer (nesse exemplo a mesma pasta "Programas").
 2. **Instalação do Oracle DB 18c:**
-    - Abrir a pasta "OracleXE18" e executar o arquivo "setup.exe";
+    - Abrir a pasta onde o Oracle 21c foi extraído e executar o arquivo "setup.exe";
     - Prosseguir com a instalação normalmente, definindo uma senha quando solicitado;
-    - Após a instalação, encontrar a pasta onde o Oracle foi instalado (normalmente "C:\app\[USUARIO]\product\18c\dbhomeXE");
+    - Após a instalação, encontrar a pasta onde o Oracle foi instalado (normalmente "C:\app\[USUARIO]\product\21c\homes\OraDB21Home1\network\admin");
     - Na pasta do Oracle, abrir a pasta network\admin e abrir os arquivos "listener.ora" e "tnsnames.ora" com o bloco de notas;
     - Nos arquivos, trocar os IPs por "localhost" (sem as aspas) e salvar os arquivos;
     - Reiniciar os serviços do Oracle no Windows (no menu iniciar, digitar "services.msc" e procurar por "OracleServiceXE" e "OracleXETNSListener", clicar com o botão direito e reiniciar os dois);
-    - (Opcional) - Excluir a pasta "OracleXE18" do computador. 
+    - (Opcional) - Excluir a pasta de instalação do Oracle do computador, e o arquivo zip original.
 3. **Programas adicionais:**
-    - Manter a pasta "Programas" em algum lugar seguro;
-    - (Opcional/Solução de problemas) - Instalar o runtime do Java (rodar o arquivo "Programas\Java JRE 20.0.1 Setup.msi" e prosseguir com a instalação normalmente, adicionando o caminho do Java ao PATH do Windows quando solicitado);
+    - (Opcional/Solução de problemas) - Baixar e instalar o runtime do Java ([baixar e abrir o arquivo instalador do Java](https://github.com/adoptium/temurin20-binaries/releases/download/jdk-20.0.1%2B9/OpenJDK20U-jre_x64_windows_hotspot_20.0.1_9.msi) e prosseguir com a instalação normalmente, adicionando o caminho do Java ao PATH do Windows quando solicitado);
     - (Opcional) - adicionar o caminho do executável do SQLcl ao PATH do Windows (no menu iniciar, digitar "variáveis de ambiente" e clicar em "Editar as variáveis de ambiente do sistema", clicar em "Variáveis de ambiente", selecionar a variável "Path" e clicar em "Editar", clicar em "Novo" e adicionar o caminho da pasta "Programas\sqlcl\bin" e clicar em "OK" em todas as janelas);
-    - (Opcional) - instalar o DBeaver como alternativa ao SQL Developer (rodar o arquivo "DBeaver Setup.exe" dentro da pasta "Programas" e prosseguir com a instalação normalmente).
 4. **Criação do banco de dados de amostra:**
     - Abrir o SQLcl ("Programas\SQLcl\bin\sql.exe") e conectar-se ao banco de dados com o usuário "SYSTEM" e a senha definida na instalação;
     - Navegar até a pasta "Banco/sales_history" (no SQLcl, digitar `cd [CAMINHO NO PC]/Banco/sales_history` e pressionar enter, sempre usando barras invertidas);
@@ -74,6 +76,11 @@ Uma máquina pessoal será usada como servidor, executando a versão 21c do Orac
     - Clicar em "Save" e em "Connect";
     - (Opcional) - Executar consultas no banco de dados de amostra para verificar se a instalação foi bem sucedida;
     - (Opcional/Alternativa) - Usar o DBeaver ao invés do SQLDeveloper.
+## Preparação - Instalação dos programas nas máquinas que serão clientes (explicado melhor mais adiante), opcional para o servidor:
+1. **Preparação:**
+    - [Baixar o instalador do DBeaver](https://dbeaver.io/download/) e salvar o arquivo em alguma pasta.
+2. **Instalação do DBeaver:**
+    - Abrir o arquivo de *setup* do DBeaver e prosseguir com a instalação.
 
 ## Descrição do esquema do banco de dados de amostra:
 A amostra escolhida é composta por 8 tabelas, sendo elas: costs, products, channels, promotions, sales, costumers, times, countries. A importação do esquema é feita por um script chamado sh_install.sql, que chamará e executará os outros scripts referentes a criação da tabela e carga de dados. No projeto são os arquivos sh_create.sql, sh_populate.sql, respectivamente. O script sh_create.sql também define constraints, chaves estrangeiras, comentários e algumas visões e visões materializadas.
@@ -224,16 +231,13 @@ Uma transação pode começar implicitamente ao ser nomeada, usando o comando SQ
     GRANT INSERT ON sh.sales to sh_usuario;
     GRANT INSERT ON sh.channels to sh_usuario;
     ```
-6. Criar uma nova conexão usando os seguintes parâmetros:
+6. No cliente, abrir o DBeaver e criar uma nova conexão Oracle usando os seguintes parâmetros (instalando o *driver*) quando solicitado:
     - Username: sh_usuario
     - Password: usuario
     - Hostname: [IP DO SERVIDOR]
     - Port: 1521
     - SID: xe
-
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/34ee35c4-8940-4610-988a-20c350c53d8f)
-
-
 
 Feito isso, é possível se conectar ao banco com o usuário sh_usuario e selecionar dados das tabelas de sh, bem como inserir novos dados em sh.sales e sh.channels.
 
@@ -342,7 +346,6 @@ Visões materializadas precisam ser "recarregadas" de tempos em tempos para mant
 Essa opção, habilitada com o comando `ENABLE QUERY REWRITE` ao criar uma visão materializada, transforma uma *user request* escrita em termos da tabela principal, localizada no banco, em uma semanticamente equivalente que inclui visões materializadas.
 É sabido que quando o banco possui quantidades gigantescas de dados, realizar uma operação de junção, ou agregação é extremamente custoso em questão de tempo e processamento. Como visões materializadas possuem essas operações pré-computadas, uma query rewrite pode rapidamente atender demandas de outras queries usando visões materializadas.
 A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerando um plano de execução para ambas as *queries*, reescrita e de usuário, e no fim comparando qual tem menor custo para obter os resultados desejados:
-
 ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/7fea208a-dbdf-4ab7-bf4a-250b243d3758)
 
 # 8. Desempenho
