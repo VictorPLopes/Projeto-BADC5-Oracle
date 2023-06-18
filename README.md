@@ -6,7 +6,7 @@
 - [Allan Bastos](mailto:allan.bastos@aluno.ifsp.edu.br)
 - [Lucas Padilha](mailto:mateus.lucas1@aluno.ifsp.edu.br)
 - [Mateus Carvalho](mailto:lucas.padilha@aluno.ifsp.edu.br)
-- [Victor Lopes](mailto:victor.probio@aluno.ifsp.edu.br)
+- [Victor Probio Lopes](mailto:victor.probio@aluno.ifsp.edu.br)
 
 # Sumário
 1. [Definição do Banco de Dados](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#1-defini%C3%A7%C3%A3o-do-banco-de-dados)
