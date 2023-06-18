@@ -237,7 +237,7 @@ Uma transação pode começar implicitamente ao ser nomeada, usando o comando SQ
     - Hostname: [IP DO SERVIDOR]
     - Port: 1521
     - SID: xe
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/34ee35c4-8940-4610-988a-20c350c53d8f)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/bd4ffc5d-eea3-41d4-ad42-4a4c44577649)
 
 Feito isso, é possível se conectar ao banco com o usuário sh_usuario e selecionar dados das tabelas de sh, bem como inserir novos dados em sh.sales e sh.channels.
 
