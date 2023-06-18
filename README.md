@@ -170,13 +170,20 @@ A tabela products foi escolhida devido a sua quantidade menor de entradas, mas o
 # 5. Transações
 Como já citado, o grupo realizou um teste utilizando uma máquina pessoal como servidor. Para isso, as seguintes intruções foram seguidas:
 1. Abrir a porta 1521 na máquina usada como servidor. Será preciso liberar no "Windows Defender Firewall com Segurança Avançada"
-   ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/5a624b73-bc16-4e5b-a613-0722fcb42911)
+   ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/ed17a29c-cda1-4ea4-8c5d-b113c5077800)
+
 2.Vamos criar uma regra de entrada e saída para a porta 1521. Para isso, é só selecionar "Regra de Entrada" ou "Regra de saída" com o botão direito e clicar em "Nova regra" e seguir os passos conforme as imagens abaixo.
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/48f2e48e-3cc1-4d7a-a312-395d9de308a3)
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/f7f54525-ef14-4887-bb12-d33d197e0336)
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/a87edfa5-dd99-4256-8535-35b2e8a78144)
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/ad3ad244-55a7-4679-9f58-f1981bc25a26)
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/77f654a7-9509-424f-9dc0-7278163d8913)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/f2059642-babb-49a2-8a6f-efddcf5548c1)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/ce5872e7-83b7-4521-ae6a-924781be4190)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/554e2642-0928-457f-8b14-409b1e2a9179)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/bd67c14f-7541-41d0-ba52-045484b2eca5)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/7261a908-54f4-41e9-9ac4-2d44445a117e)
+![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/e7065787-46c0-4749-8083-4bfe056f0ddf)
+
+
+
+
+
 3. Criar uma nova conexão usando os seguintes parámetros:
     - Username: sh
     - Password: [SENHA DEFINIDA NA INSTALAÇÃO]
