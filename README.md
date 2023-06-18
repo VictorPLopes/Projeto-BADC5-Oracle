@@ -75,7 +75,7 @@ Uma máquina pessoal será usada como servidor, executando a versão 21c do Orac
     - Clicar em "Test" e aguardar a mensagem de sucesso;
     - Clicar em "Save" e em "Connect";
     - (Opcional) - Executar consultas no banco de dados de amostra para verificar se a instalação foi bem sucedida;
-    - (Opcional/Alternativa) - Usar o DBeaver ao invés do SQLDeveloper.
+    - (Opcional/Alternativa) - Usar o DBeaver (explicado em seguida) ao invés do SQLDeveloper.
 ## Preparação - Instalação dos programas nas máquinas que serão clientes (explicado melhor mais adiante), opcional para o servidor:
 1. **Preparação:**
     - [Baixar o instalador do DBeaver](https://dbeaver.io/download/) e salvar o arquivo em alguma pasta.
