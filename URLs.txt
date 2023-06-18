@@ -1,0 +1,13 @@
+Todos os URLs externos seguintes podem ser encontrados em forma de hiperlink no texto principal:
+- Oracle XE 21c
+    https://www.oracle.com/database/technologies/xe-downloads.html
+- Esquemas de demonstração
+    https://github.com/oracle-samples/db-sample-schemas/archive/refs/tags/v23.1.zip
+- SQLcl 23.1
+    https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip
+- SQLDeveloper
+    https://www.oracle.com/database/sqldeveloper/technologies/download/
+- Java JRE 20
+    https://github.com/adoptium/temurin20-binaries/releases/download/jdk-20.0.1%2B9/OpenJDK20U-jre_x64_windows_hotspot_20.0.1_9.msi
+- DBeaver
+    https://dbeaver.io/download/
