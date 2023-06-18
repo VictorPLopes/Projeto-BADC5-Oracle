@@ -40,13 +40,13 @@ O grupo estudou a possibilidade de hospedar o banco em algum sistema de nuvem, p
 A escolha do serviço AWS foi realizada, e após dias de dificuldades com a execução do script no banco, esse foi importado com sucesso para a nuvem. Porém, o grupo descobriu da pior forma possível, na aula do dia 05/06/2023, que o serviço gratuito do AWS, não era gratuito (pelo menos não para Oracle). Assim, surgiu uma outra ideia: rodar o banco em uma máquina pessoal na rede do Instituto Federal, e usar apenas o DBeaver nas outras máquinas para se conectar ao servidor.
 Essa ideia foi testada com sucesso no mesmo dia, e até agora se provou como a melhor opção em todos os quesitos: é gratuita, fácil de configurar, possui controle ilimitado, não depende da internet para funcionar, é rápida de configurar em uma nova máquina, não precisa de nenhum software adicional nos outros computadores alem do DBeaver e possibilita executar a última versão do Oracle DB (21c) no servidor e a versão mais atual do script, evitando a necessidade de utilizar as versões mais antigas dos softwares por conta das limitações do laboratório.
 
-## Resumindo:
+## Resumindo
 
 Uma máquina pessoal será usada como servidor, executando a versão 21c do Oracle DB. Os clientes se conectarão usando o DBeaver.
 
 # 3. Definição do Esquema e Carga de Dados
 
-## Foram anotadas as instruções executadas no computador servidor para instalar o banco e carregar nele os dados:
+## Foram anotadas as instruções executadas no computador servidor para instalar o banco e carregar nele os dados
 
 1. **Preparação:**
     - [Baixar o Oracle Express Edition 21c](https://www.oracle.com/database/technologies/xe-downloads.html), os [esquemas de demonstração em sua versão 23c](https://github.com/oracle-samples/db-sample-schemas/archive/refs/tags/v23.1.zip), [o SQLcl 23.1](https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip), [o SQLDeveloper](https://www.oracle.com/database/sqldeveloper/technologies/download/) e salvar seus arquivos em alguma pasta "segura" no computador;
@@ -87,56 +87,49 @@ Uma máquina pessoal será usada como servidor, executando a versão 21c do Orac
     - (Opcional) - Executar consultas no banco de dados de amostra para verificar se a instalação foi bem sucedida;
     - (Opcional/Alternativa) - Usar o DBeaver (explicado em seguida) ao invés do SQLDeveloper.
 
-## Preparação - Instalação dos programas nas máquinas que serão clientes (explicado melhor mais adiante), opcional para o servidor:
+## Preparação - Instalação dos programas nas máquinas que serão clientes (explicado melhor mais adiante), opcional para o servidor
 
 1. **Preparação:**
     - [Baixar o instalador do DBeaver](https://dbeaver.io/download/) e salvar o arquivo em alguma pasta.
 2. **Instalação do DBeaver:**
     - Abrir o arquivo de *setup* do DBeaver e prosseguir com a instalação.
 
-## Descrição do esquema do banco de dados de amostra:
+## Descrição do esquema do banco de dados de amostra
 
 A amostra escolhida é composta por 8 tabelas, sendo elas: costs, products, channels, promotions, sales, costumers, times, countries. A importação do esquema é feita por um script chamado sh_install.sql, que chamará e executará os outros scripts referentes a criação da tabela e carga de dados. No projeto são os arquivos sh_create.sql, sh_populate.sql, respectivamente. O script sh_create.sql também define constraints, chaves estrangeiras, comentários e algumas visões e visões materializadas.
 
-### Alguns comandos usados pelos scripts para criar os esquemas são:
+### Alguns comandos usados pelos scripts para criar os esquemas são
 
 1. **Tabela Countries:**
     - Todas as colunas criadas para essa tabela são determinadas com a constraint `NOT NULL`
     - `CONSTRAINT countries_pk PRIMARY KEY (country_id) //define a PK da tabela para a coluna country_id`
- 
 2. **Tabela Costumers:**
     - `CONSTRAINT customers_pk PRIMARY KEY (cust_id) //define a PK da tabela para a coluna cust_id`
     - `CONSTRAINT customers_country_fk  FOREIGN KEY (country_id) REFERENCES countries (country_id) //a coluna country_id é uma chave estrangeira que referencia a coluna country_id da tabela Country`
- 
 3. **Tabela Promotions:**
     - Todas as colunas desta tabela possuem a constraint `NOT NULL` declarada.
     - `CONSTRAINT promo_pk PRIMARY KEY (promo_id) //definição da chave primária`
- 
 4. **Tabela Products:**
     - Algumas colunas desta tabela possuem a constraint `NOT NULL` declarada.
     - `CONSTRAINT products_pk PRIMARY KEY (prod_id) //definição da chave primária`
- 
 5. **Tabela Times:**
     - Todas as colunas desta tabela possuem a constraint `NOT NULL` declarada.
     - `CONSTRAINT times_pk PRIMARY KEY (time_id) //definição da chave primária`
- 
 6. **Tabela Channels:**
     - Todas as colunas desta tabela possuem a constraint `NOT NULL` declarada.
     - `CONSTRAINT channels_pk PRIMARY KEY (channel_id)//definição da chave primária`
- 
 7. **Tabela Sales:**
     - Todas as colunas desta tabela possuem a constraint `NOT NULL` declarada.
     - 6 das 7 colunas desta tabela são chaves estrangeiras que referenciam as chaves primárias das tabelas anteriores.
- 
 8. **Tabela Costs:**
     - Todas as colunas desta tabela possuem a constraint `NOT NULL` declarada.
     - Semelhante a tabela Sales, possui 4 de suas colunas referenciando chaves primárias de outras tabelas
 
 # 4. Consultas Simples
 
-## Ao fim da execução do script, são exibidas quantas entradas foram inseridas, em cada uma das tabelas, comparando os valores com os números esperados:
+## Ao fim da execução do script, são exibidas quantas entradas foram inseridas, em cada uma das tabelas, comparando os valores com os números esperados
 
-```
+```txt
 Installation verification
 ____________________________
 Verification:
@@ -159,7 +152,7 @@ The installation of the sample schema is now finished.
 Please check the installation verification output above.
 ```
 
-### O comando executado pelo script foi:
+### O comando executado pelo script foi
 
 ```SQL
 SELECT 'Verification:' AS "Installation verification" FROM dual;
@@ -183,7 +176,7 @@ UNION ALL
 SELECT 'supplementary_demographics' AS "Table", 4500 AS "provided", count(1) AS "actual" FROM supplementary_demographics;
 ```
 
-### Para uma verificação manual mais detalhada, o comando `SELECT * FROM products;` foi executado, retornando as informações de 72 produtos inseridos no banco:
+### Para uma verificação manual mais detalhada, o comando `SELECT * FROM products;` foi executado, retornando as informações de 72 produtos inseridos no banco
 
 ![Query no SQLDeveloper](https://user-images.githubusercontent.com/77900343/244724009-4477be40-279f-4beb-812f-b0aaf9a875b3.png)
 A tabela products foi escolhida devido a sua quantidade menor de entradas, mas o mesmo teste foi realizado com a tabela promotions, de 503 entradas (`SELECT * FROM promotions;`).
@@ -237,7 +230,7 @@ Uma transação pode começar implicitamente ao ser nomeada, usando o comando SQ
 
 ## Exemplo de transações
 
-### Para criar um novo usuário, que fará as operações simples ao banco, é necessário:
+### Para criar um novo usuário, que fará as operações simples ao banco, é necessário
 
 1. Logar como usuário SYSTEM no Oracle
 2. Garantir ao usuário sh permissão para criar usuários e manipular o banco com o comando `GRANT ALL PRIVILEGES to sh;`, após rodar `alter session set "_ORACLE_SCRIPT"=true;`
@@ -410,7 +403,7 @@ A análise de desempenho no Oracle é de extrema importância, pois o desempenho
 
 Ao rodar o comando`EXPLAIN PLAN`, o plano de execução de uma consulta é salvo na tabela `DBMS_XPLAN.DISPLAY`, cujos resultados podem ser vizualizados (usando o comando `SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);`. Esse comando obtem a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O `EXPLAIN PLAN` permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho.
 
-### Exemplo (usando a visão criada anteriormente):
+### Exemplo (usando a visão criada anteriormente)
 
 ```SQL
     EXPLAIN PLAN FOR SELECT * FROM products_sales;
@@ -431,15 +424,15 @@ Os índices são usados no banco de dados Oracle para melhorar o desempenho das 
 No entanto, é importante lembrar que a criação de índices também tem algumas considerações. Os índices ocupam espaço em disco e podem afetar o desempenho durante as operações de modificação de dados. Portanto, é necessário encontrar um equilíbrio entre a criação de índices para melhorar o desempenho das consultas e evitar o excesso de índices, que podem ter um impacto negativo no desempenho geral do banco de dados.
 Os principais tipos de índeces no banco de dados Oracle são:
 
-### Índice de Chave Única:
+### Índice de Chave Única
 
 O índice de chave única garante que os valores da coluna indexada sejam exclusivos, sem permitir duplicatas. Ele é criado automaticamente quando você define uma restrição de chave primária ou chave única em uma tabela. Não há necessidade de criar explicitamente um índice de chave única, pois ele é criado automaticamente quando a restrição é definida.
 
-### Índice de Chave Externa:
+### Índice de Chave Externa
 
 O índice de chave externa é criado automaticamente quando você define uma restrição de chave estrangeira em uma tabela. Ele garante a integridade referencial entre duas tabelas. Assim como o índice de chave única, não é necessário criar explicitamente um índice de chave externa.
 
-### Índice B-tree (padrão):
+### Índice B-tree (padrão)
 
 O índice B-tree é o tipo de índice mais comumente usado no Oracle. Ele é criado automaticamente quando você cria uma restrição de chave primária ou chave estrangeira em uma tabela. No entanto, você também pode criar um índice B-tree explicitamente usando o seguinte comando:
 
@@ -447,7 +440,7 @@ O índice B-tree é o tipo de índice mais comumente usado no Oracle. Ele é cri
 CREATE INDEX index_name ON table_name (column_name);
 ```
 
-### Índice Bitmap:
+### Índice Bitmap
 
 O índice Bitmap é útil para colunas com baixa cardinalidade, ou seja, com um número limitado de valores distintos. Ele usa uma estrutura bitmap para representar os valores dos registros. Para criar um índice bitmap, você pode usar o seguinte comando:
 
@@ -455,7 +448,8 @@ O índice Bitmap é útil para colunas com baixa cardinalidade, ou seja, com um 
 CREATE BITMAP INDEX index_name ON table_name (column_name);
 ```
 
-### Índice Hash:
+### Índice Hash
+
 O índice hash é adequado para consultas de igualdade rápida, onde os valores da chave de pesquisa são distribuídos uniformemente. Para criar um índice hash em Oracle, você pode usar o seguinte comando:
 
 ```SQL
@@ -464,7 +458,7 @@ ON table_name (column_name)
 INDEXTYPE IS HASH;
 ```
 
-### Índice de Função:
+### Índice de Função
 
 O índice de função permite criar um índice em uma expressão ou função aplicada a uma coluna. Isso é útil quando você precisa indexar os resultados de uma função para melhorar o desempenho das consultas. Para criar um índice de função, você pode usar o seguinte comando:
 
@@ -480,20 +474,20 @@ DROP INDEX index_name;
 
 ## Parâmetros de Configuração
 
-### Uso de *hints*:
+### Uso de *hints*
 
 É possível usar *hints* (sugestões) nas consultas para especificar se um índice deve ser usado ou ignorado pelo otimizador de consultas. Os *hints* fornecem instruções diretas ao otimizador sobre como executar a consulta. Aqui estão alguns exemplos de *hints* relacionados a índices:
 
 - `INDEX(table_name index_name)`: Força o uso específico de um índice em uma tabela.
 - `NO_INDEX(table_name index_name)`: Instrui o otimizador a ignorar um índice específico em uma tabela.
 
-### Uso de parâmetros de sessão:
+### Uso de parâmetros de sessão
 
 É possível definir os parâmetros de sessão `OPTIMIZER_USE_INVISIBLE_INDEXES` e `OPTIMIZER_IGNORE_HINTS` para controlar o uso de índices em consultas. Esses parâmetros afetam todas as consultas executadas na sessão.
 `OPTIMIZER_USE_INVISIBLE_INDEXES`: Se definido como "TRUE", permite que o otimizador use índices invisíveis em consultas.
 `OPTIMIZER_IGNORE_HINTS`: Se definido como "TRUE", instrui o otimizador a ignorar todos os hints nas consultas.
 
-### Desativação temporária de índices:
+### Desativação temporária de índices
 
 É possível desativar temporariamente um índice usando a cláusula `ALTER INDEX` com a opção `UNUSABLE`. Isso fará com que o Oracle trate o índice como não utilizável, e o otimizador não o considerará durante a execução das consultas. No entanto, a estrutura do índice ainda é mantida no banco de dados.
 `ALTER INDEX index_name UNUSABLE;`
@@ -631,7 +625,7 @@ Plan hash value: 3783523653
 
 Assim, fica claro que a diferença entre ambas é bem grande. O custo da visão chegou a 3900, com um uso máximo de CPU de 25%. Enquanto isso, o custo máximo da visão materializada foi de apenas 3, sem uso significativo de CPU.
 
-# Referências:
+# Referências
 
 - SRINIVAS, Apoorva. **Installation of the Sample Schemas**. Oracle Help Center. Disponível em: <https://docs.oracle.com/en/database/oracle/oracle-database/21/comsc/installing-sample-schemas.html>. Acesso em: 18 jun. 2023.
 - KUSH, Frederick; HERMANN BAER, Mark Bauer; POTINENI, Padmaja. **Refreshing Materialized Views**. Oracle Help Center. Disponível em: <https://docs.oracle.com/en/database/oracle/oracle-database/12.2/dwhsg/refreshing-materialized-views.html>. Acesso em: 18 jun. 2023.
