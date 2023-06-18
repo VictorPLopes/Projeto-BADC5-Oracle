@@ -6,9 +6,9 @@
 
 # Nomes dos integrantes
 
-- [Allan Bastos](mailto:allan.bastos@aluno.ifsp.edu.br)
-- [Lucas Padilha](mailto:mateus.lucas1@aluno.ifsp.edu.br)
-- [Mateus Carvalho](mailto:lucas.padilha@aluno.ifsp.edu.br)
+- [Allan Bastos da Silva](mailto:allan.bastos@aluno.ifsp.edu.br)
+- [Lucas dos Santos Padilha](mailto:mateus.lucas1@aluno.ifsp.edu.br)
+- [Mateus Carvalho Lucas](mailto:lucas.padilha@aluno.ifsp.edu.br)
 - [Victor Probio Lopes](mailto:victor.probio@aluno.ifsp.edu.br)
 
 # Sumário
