@@ -1,4 +1,4 @@
-# Trabalho de Banco de Dados 2
+# [Trabalho de Banco de Dados 2](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/blob/main/README.md)
 ## Tema: Oracle DB
 ### Conteúdos: transações, visões, visões materializadas e desempenho
 
