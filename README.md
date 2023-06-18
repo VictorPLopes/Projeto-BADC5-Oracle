@@ -44,7 +44,7 @@ Uma máquina pessoal será usada como servidor, executando a versão 21c do Orac
     - Abrir o arquivo zip do esquema, a pasta "db-sample-schemas-23.1" e extrair a subpasta "sales_history" para uma pasta qualquer no computador (nesse exemplo, dentro de uma pasta qualquer chamada "Banco");
     - Extrair os conteúdos do arquivo zip do SQLcl para uma pasta qualquer (nesse exemplo uma pasta chamada "Programas").
     - Extrair os conteúdos do arquivo zip do SQLDeveloper para uma pasta qualquer (nesse exemplo a mesma pasta "Programas").
-2. **Instalação do Oracle DB 18c:**
+2. **Instalação do Oracle DB 21c:**
     - Abrir a pasta onde o Oracle 21c foi extraído e executar o arquivo "setup.exe";
     - Prosseguir com a instalação normalmente, definindo uma senha quando solicitado;
     - Após a instalação, encontrar a pasta onde o Oracle foi instalado (normalmente "C:\app\[USUARIO]\product\21c\homes\OraDB21Home1\network\admin");
