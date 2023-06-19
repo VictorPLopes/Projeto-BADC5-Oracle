@@ -25,6 +25,8 @@
 6. [Visões (views)](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#6-vis%C3%B5es-views)
 7. [Visões materializadas (materialized views)](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#7-vis%C3%B5es-materializadas-materialized-views)
 8. [Desempenho](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#8-desempenho)
+9. [Conclusão](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#conclus%C3%A3o)
+10. [Referências](https://github.com/VictorPLopes/Projeto-BADC5-Oracle#refer%C3%AAncias)
 
 # 1. Definição do Banco de Dados
 
