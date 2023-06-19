@@ -363,6 +363,18 @@ Algumas características:
 - Melhoram a performance de uma execução SQL quando usadas para operações de reescrita (*query rewrite*).
 No Oracle, as visões materializadas são criadas de forma semelhante às visões, usando o comando `CREATE MATERIALIZED VIEW nome AS` (onde "nome" é um nome qualquer), seguido de uma consulta (`SELECT`). Assim, o resultado desse `SELECT` é armazenado em disco, em outra tabela, e quando é efetuada uma busca na visão materializada, o Oracle retorna as tuplas dessa tabela.
 
+## Sintaxe de uma visão materializada
+
+```sql
+CREATE MATERIALIZED VIEW view-name
+BUILD [IMMEDIATE | DEFERRED]
+REFRESH [FAST | COMPLETE | FORCE ]
+ON [COMMIT | DEMAND ]
+[[ENABLE | DISABLE] QUERY REWRITE]
+AS
+SELECT ...;
+```
+
 ## Exemplo de *materialized view*
 
 Para o esquema sh já discutido, a seguinte visão materializada retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total. A consulta é exatamente igual à visão `products_sales`, porém é uma visão materializada, que armazena esses resultados em uma tabela:
@@ -642,3 +654,5 @@ Esses atributos combinados fazem do OracleDB uma escolha sólida para organizaç
 - ASHDOWN, Lance; KEESLING, Donna; KYTE, Tom. **Database Concepts**. Oracle Help Center. Disponível em: <https://docs.oracle.com/en/database/oracle/oracle-database/21/cncpt/>. Acesso em: 18 jun. 2023.
 - **Oracle Database Transactions| Oracle Transactions | COMMIT, ROLLBACK, SAVEPOINT | Oracle Tutorial**. [s.l.: s.n.], 2022. Disponível em: <https://www.youtube.com/watch?v=T7V8fgwtRB4>. Acesso em: 18 jun. 2023.
 - **Artigo da SQL Magazine 36 - Índices no Oracle - Parte I**. DevMedia. Disponível em: <https://www.devmedia.com.br/artigo-da-sql-magazine-36-indices-no-oracle-parte-i/6835>. Acesso em: 18 jun. 2023.
+- **Materialized Views in Oracle. oracle-base.com**. Disponível em: <https://oracle-base.com/articles/misc/materialized-views>. Acesso em: 19 jun. 2023.
+
