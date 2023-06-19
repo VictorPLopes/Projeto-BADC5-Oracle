@@ -1,3 +1,13 @@
+Links principais:
+- Tutorial - repositório do GitHub
+    https://github.com/VictorPLopes/Projeto-BADC5-Oracle
+- Tutorial - arquivo principal no GitHub:
+    https://github.com/VictorPLopes/Projeto-BADC5-Oracle/blob/main/README.md
+- Tutorial - arquivo principal no GitHub Gists (mirror)
+    https://gist.github.com/VictorPLopes/24d859cd5316b883107ef449a3a52524
+- Tutorial - arquivo principal no Google docs
+    https://drive.google.com/file/d/1ZY71ASYCsZcFV8-UO_p5rLcsoytLRie1/view?usp=sharing
+
 Todos os URLs externos seguintes podem ser encontrados em forma de hiperlink no texto principal:
 - Oracle XE 21c
     https://www.oracle.com/database/technologies/xe-downloads.html
