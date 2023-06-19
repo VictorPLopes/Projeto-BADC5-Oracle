@@ -217,7 +217,7 @@ As transações do Oracle obedecem às propriedades ACID, acrônimo que signific
 - **Atomicidade**
  Ou todas as tarefas são executadas, ou nenhuma é. Transações não são parciais, e caso haja uma falha no meio de sua execução, a transação é revertida em sua totalidade.
 - **Consistência**
-  A tranasação deve tirar o banco de dados de um estado consistente e o levar para outro estado consistente. Falhas não podem resultar em inconsistência de dados.
+  A transação deve tirar o banco de dados de um estado consistente e o levar para outro estado consistente. Falhas não podem resultar em inconsistência de dados.
 - **Isolação**
  As transações são isoladas entre si, ou seja, os efeitos de uma transação não são visíveis para outras até que essa receba um *commit*.
 - **Durabilidade**
