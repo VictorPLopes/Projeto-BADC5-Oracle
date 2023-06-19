@@ -6,10 +6,14 @@
 
 # Nomes dos integrantes
 
-- [Allan Bastos da Silva](mailto:allan.bastos@aluno.ifsp.edu.br)
+- [Allan Bastos da Silva](https://github.com/allan-bastos)
+  - [allan.bastos@aluno.ifsp.edu.br](mailto:allan.bastos@aluno.ifsp.edu.br)
 - [Lucas dos Santos Padilha](mailto:mateus.lucas1@aluno.ifsp.edu.br)
-- [Mateus Carvalho Lucas](mailto:lucas.padilha@aluno.ifsp.edu.br)
-- [Victor Probio Lopes](mailto:victor.probio@aluno.ifsp.edu.br)
+  - [mateus.lucas1@aluno.ifsp.edu.br](mailto:mateus.lucas1@aluno.ifsp.edu.br)
+- [Mateus Carvalho Lucas](https://github.com/Teuscl)
+  - [lucas.padilha@aluno.ifsp.edu.br](https://github.com/lucasdspadilha)
+- [Victor Probio Lopes](https://github.com/VictorPLopes)
+  - [victor.probio@aluno.ifsp.edu.br](mailto:victor.probio@aluno.ifsp.edu.br)
 
 # Sumário
 
@@ -623,6 +627,11 @@ Plan hash value: 3783523653
 ```
 
 Assim, fica claro que a diferença entre ambas é bem grande. O custo da visão chegou a 3900, com um uso máximo de CPU de 25%. Enquanto isso, o custo máximo da visão materializada foi de apenas 3, sem uso significativo de CPU.
+
+# Conclusão
+
+O OracleDB é um banco de dados relacional que surgiu no final da década de 70 e desde seu surgimento veio evoluindo e se tornando um dos SGBD (Sistema Gerenciador de Banco de Dados), que graças as suas qualidades - as quais pode-se citar segurança, escalonamento e desempenho – se tornou dentro do mercado um dos banco de dados mais conhecidos e utilizados atualmente. A partir da análise e estudo sobre os temas visões, visões materializada, desempenho e transações foi possível visualizar que o OracleDB disponibiliza seus serviços de forma completa e abrangente. Com recursos avançados de visões e visões materializadas, o OracleDB permite uma melhor organização e simplificação do acesso aos dados, melhorando a eficiência e a facilidade de uso. Além disto o OracleDB procura disponibilizar diversos métodos para utilizar suas soluções, como por exemplo em desempenho onde com conhecimento sobre o produto você pode definir suas prioridades no uso de índice.
+Esses atributos combinados fazem do OracleDB uma escolha sólida para organizações que exigem um sistema de gerenciamento de banco de dados confiável, seguro e de alto desempenho.
 
 # Referências
 
