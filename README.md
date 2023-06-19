@@ -211,7 +211,7 @@ Como já citado, o grupo realizou um teste utilizando uma máquina pessoal como 
     - SID: xe
 4. Realizar consultas simples para testar a conexão.
 
-Após o fim do teste, o grupo iniciou a pesquisa sobre transações no Oracle. No Oracle, transações unidades lógicas atômicas de trabalho que contém um ou mais comandos SQL. Essas transações são então grupos de comandos que podem ser aplicados ao banco de dados em sua totalidade (*commit*) ou desfeitos em sua totalidade (*rollback*). O Oracle atribui um ID único para cada transação.
+Após o fim do teste, o grupo iniciou a pesquisa sobre transações no Oracle. No Oracle, transações são unidades lógicas atômicas de trabalho que contém um ou mais comandos SQL. Essas transações são então grupos de comandos que podem ser aplicados ao banco de dados em sua totalidade (*commit*) ou desfeitos em sua totalidade (*rollback*). O Oracle atribui um ID único para cada transação.
 As transações do Oracle obedecem às propriedades ACID, acrônimo que significa:
 
 - **Atomicidade**
