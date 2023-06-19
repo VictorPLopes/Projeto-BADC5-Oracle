@@ -192,7 +192,7 @@ A tabela products foi escolhida devido a sua quantidade menor de entradas, mas o
 
 # 5. Transações
 
-Como já citado, o grupo realizou um teste utilizando uma máquina pessoal como servidor. Para isso, as seguintes intruções foram seguidas:
+Como já citado, o grupo realizou um teste utilizando uma máquina pessoal como servidor. Para isso, as seguintes instruções foram seguidas:
 
 1. Abrir a porta 1521 na máquina usada como servidor. Será preciso liberar no "Windows Defender Firewall com Segurança Avançada"
     ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/ed17a29c-cda1-4ea4-8c5d-b113c5077800)
