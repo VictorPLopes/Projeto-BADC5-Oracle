@@ -200,7 +200,7 @@ Como já citado, o grupo realizou um teste utilizando uma máquina pessoal como 
     ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/bd67c14f-7541-41d0-ba52-045484b2eca5)
     ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/7261a908-54f4-41e9-9ac4-2d44445a117e)
     ![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/110204662/e7065787-46c0-4749-8083-4bfe056f0ddf)
-3. Criar uma nova conexão usando os seguintes parámetros:
+3. Criar uma nova conexão usando os seguintes parâmetros:
     - Username: sh
     - Password: [SENHA DEFINIDA NA INSTALAÇÃO]
     - Hostname: [IP DO SERVIDOR]
@@ -209,16 +209,16 @@ Como já citado, o grupo realizou um teste utilizando uma máquina pessoal como 
 4. Realizar consultas simples para testar a conexão.
 
 Após o fim do teste, o grupo iniciou a pesquisa sobre transações no Oracle. No Oracle, transações unidades lógicas atômicas de trabalho que contém um ou mais comandos SQL. Essas transações são então grupos de comandos que podem ser aplicados ao banco de dados em sua totalidade (*commit*) ou desfeitos em sua totalidade (*rollback*). O Oracle atribui um ID único para cada transação.
-As transações do Oracle obedeçem às propriedades ACID, acronimo que significa:
+As transações do Oracle obedecem às propriedades ACID, acrônimo que significa:
 
 - **Atomicidade**
  Ou todas as tarefas são executadas, ou nenhuma é. Transações não são parciais, e caso haja uma falha no meio de sua execução, a transação é revertida em sua totalidade.
 - **Consistência**
   A tranasação deve tirar o banco de dados de um estado consistente e o levar para outro estado consistente. Falhas não podem resultar em inconsistência de dados.
 - **Isolação**
- As transações são isoladas entre si, ou seja, os efeitos de uma transação não são visiveis para outras até que essa receba um *commit*.
+ As transações são isoladas entre si, ou seja, os efeitos de uma transação não são visíveis para outras até que essa receba um *commit*.
 - **Durabilidade**
- Mudanças feitas por transções que receberam um *commit* são permanentes, e não são perdidas no banco.
+ Mudanças feitas por transações que receberam um *commit* são permanentes, e não são perdidas no banco.
 
 Transações em um banco de dados possuem um ou mais comandos, e um começo e fim. No Oracle, o começo de uma transação é demarcado pelo primeiro comando SQL executável encontrado. Quando uma nova transação começa, o Oracle DB a associa a um conjunto de dados para serem "desfeitos", e depois atribui à transação um ID. Já o fim de uma transação pode ser uma das seguintes situações:
 
@@ -365,7 +365,7 @@ No Oracle, as visões materializadas são criadas de forma semelhante às visõe
 
 ## Exemplo de *materialized view*
 
-Para o esquema sh já discutido, a seguinte visão materizlizada retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total. A consulta é exatamente igual à visão `products_sales`, porém é uma visão materializada, que armazena esses resultados em uma tabela:
+Para o esquema sh já discutido, a seguinte visão materializada retorna uma lista de todos os produtos (seu nome e id), e quantas unidades do mesmo foram vendidas no total. A consulta é exatamente igual à visão `products_sales`, porém é uma visão materializada, que armazena esses resultados em uma tabela:
 
 ```sql
 CREATE MATERIALIZED VIEW products_sales_mv
@@ -387,14 +387,14 @@ Assim, essas informações de vendas podem ser retornadas com o comando `SELECT 
 Visões materializadas precisam ser "recarregadas" de tempos em tempos para manter seus dados consistentes no banco. Para isso, no Oracle, existem dois métodos principais:
 
 - ***Complete Refresh:***
-  Executada ao criar uma visão materializada. Reconstroi a visão materializada por completo. Esse método pode ser lento, especialmente caso o banco de dados precise ler e processar imensas quantidades de dados. Pode ser executado sob demanda com o comando `BEGIN DBMS_SNAPSHOT.REFRESH( '"SCHEMA"."MATERIALIZED_VIEW"','C'); end;` (onde "SCHEMA" e "MATERIALIZED_VIEW" são, respectivamente, os nomes do esquema e da visão materializada).
+  Executada ao criar uma visão materializada. Reconstrói a visão materializada por completo. Esse método pode ser lento, especialmente caso o banco de dados precise ler e processar imensas quantidades de dados. Pode ser executado sob demanda com o comando `BEGIN DBMS_SNAPSHOT.REFRESH( '"SCHEMA"."MATERIALIZED_VIEW"','C'); end;` (onde "SCHEMA" e "MATERIALIZED_VIEW" são, respectivamente, os nomes do esquema e da visão materializada).
 - ***Incremental Refresh / Fast Refresh:***
   Processa apenas as mudanças para dados existentes. Ele elimina a necessidade de "reconstruir" a visão materializada do começo. Pode ser executado sob demanda com o comando `BEGIN DBMS_SNAPSHOT.REFRESH( '"SCHEMA"."MATERIALIZED_VIEW"','F'); end;` (onde "SCHEMA" e "MATERIALIZED_VIEW" são, respectivamente, os nomes do esquema e da visão materializada).
 É possível atualizar visões materializadas por demanda ou em intervalos regulares de tempo. Além disso, é possível criar uma configuração de modo que a cada *commit* de transação de suas tabelas base, a visão seja atualizada.
 
 ## *Query Rewrite*
 
-Essa opção, habilitada com o comando `ENABLE QUERY REWRITE` ao criar uma visão materializada, transforma uma *user request* escrita em termos da tabela principal, localizada no banco, em uma semanticamente equivalente que inclui visões materializadas.
+Essa opção, habilitada com o comando `ENABLE QUERY REWRITE` ao criar uma visão materializada, transforma uma *user request* escrita em termos da tabela principal, localizada no banco, em uma semanticamente equivalente que inclui visões materializadas. Ou seja, é o mecanismo que permite ao Oracle automaticamente reescrever as consultas em termos de visões materializadas já existentes.
 É sabido que quando o banco possui quantidades gigantescas de dados, realizar uma operação de junção, ou agregação é extremamente custoso em questão de tempo e processamento. Como visões materializadas possuem essas operações pré-computadas, uma query rewrite pode rapidamente atender demandas de outras queries usando visões materializadas.
 A figura abaixo (retirada da documentação do Oracle) mostra o Oracle DB gerando um plano de execução para ambas as *queries*, reescrita e de usuário, e no fim comparando qual tem menor custo para obter os resultados desejados:
 
@@ -406,7 +406,7 @@ A análise de desempenho no Oracle é de extrema importância, pois o desempenho
 
 ## Plano/Relatório de Consulta
 
-Ao rodar o comando`EXPLAIN PLAN`, o plano de execução de uma consulta é salvo na tabela `DBMS_XPLAN.DISPLAY`, cujos resultados podem ser vizualizados (usando o comando `SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);`. Esse comando obtem a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O `EXPLAIN PLAN` permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho.
+Ao rodar o comando `EXPLAIN PLAN`, o plano de execução de uma consulta é salvo na tabela `DBMS_XPLAN.DISPLAY`, cujos resultados podem ser vizualizados (usando o comando `SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);`. Esse comando obtêm a sequência de operações que o otimizador de consultas do Oracle planeja executar para processar a consulta. O `EXPLAIN PLAN` permite avaliar a eficiência da consulta e identificar possíveis problemas de desempenho.
 
 ### Exemplo (usando a visão criada anteriormente)
 
@@ -427,7 +427,7 @@ Usando o DBeaver, também é possível selecionar a consulta desejada, clicar co
 
 Os índices são usados no banco de dados Oracle para melhorar o desempenho das consultas e acelerar a recuperação de dados. Eles são estruturas de dados adicionais que armazenam valores de colunas específicas em uma tabela e fornecem um caminho rápido para localizar registros com base nesses valores.
 No entanto, é importante lembrar que a criação de índices também tem algumas considerações. Os índices ocupam espaço em disco e podem afetar o desempenho durante as operações de modificação de dados. Portanto, é necessário encontrar um equilíbrio entre a criação de índices para melhorar o desempenho das consultas e evitar o excesso de índices, que podem ter um impacto negativo no desempenho geral do banco de dados.
-Os principais tipos de índeces no banco de dados Oracle são:
+Os principais tipos de índices no banco de dados Oracle são:
 
 ### Índice de Chave Única
 
@@ -509,14 +509,14 @@ CREATE BITMAP INDEX products_prod_status_bix
    ON products(prod_status);
 ```
 
-Plano de consulta para a selação dos produtos que tem o status = 'AVAILABLE':
+Plano de consulta para a seleção dos produtos que tem o status = 'AVAILABLE':
 
 ```SQL
 EXPLAIN PLAN FOR SELECT prod_name, prod_status FROM products WHERE prod_status = 'AVAILABLE';
 ```
 
 Resultado do plano de consulta com índice 'products_prod_status_bix' ativado:
-![image](https://github.com/VictorPLopes/Projeto-BADC5-Oracle/assets/77900343/f0529107-e0dc-4e24-8172-96b032c02869)
+![image](https://cdn.discordapp.com/attachments/862139918415429652/1118535504623845386/image.png)
 
 Desativando o índice bitmap criado:
 
