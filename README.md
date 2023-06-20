@@ -215,13 +215,13 @@ Após o fim do teste, o grupo iniciou a pesquisa sobre transações no Oracle. N
 As transações do Oracle obedecem às propriedades ACID, acrônimo que significa:
 
 - **Atomicidade**
- Ou todas as tarefas são executadas, ou nenhuma é. Transações não são parciais, e caso haja uma falha no meio de sua execução, a transação é revertida em sua totalidade.
+  - Ou todas as tarefas são executadas, ou nenhuma é. Transações não são parciais, e caso haja uma falha no meio de sua execução, a transação é revertida em sua totalidade.
 - **Consistência**
-  A transação deve tirar o banco de dados de um estado consistente e o levar para outro estado consistente. Falhas não podem resultar em inconsistência de dados.
+  - A transação deve tirar o banco de dados de um estado consistente e o levar para outro estado consistente. Falhas não podem resultar em inconsistência de dados.
 - **Isolação**
- As transações são isoladas entre si, ou seja, os efeitos de uma transação não são visíveis para outras até que essa receba um *commit*.
+  - As transações são isoladas entre si, ou seja, os efeitos de uma transação não são visíveis para outras até que essa receba um *commit*.
 - **Durabilidade**
- Mudanças feitas por transações que receberam um *commit* são permanentes, e não são perdidas no banco.
+  - Mudanças feitas por transações que receberam um *commit* são permanentes, e não são perdidas no banco.
 
 Transações em um banco de dados possuem um ou mais comandos, e um começo e fim. No Oracle, o começo de uma transação é demarcado pelo primeiro comando SQL executável encontrado. Quando uma nova transação começa, o Oracle DB a associa a um conjunto de dados para serem "desfeitos", e depois atribui à transação um ID. Já o fim de uma transação pode ser uma das seguintes situações:
 
