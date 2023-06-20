@@ -9,9 +9,9 @@
 - [Allan Bastos da Silva](https://github.com/allan-bastos)
   - [allan.bastos@aluno.ifsp.edu.br](mailto:allan.bastos@aluno.ifsp.edu.br)
 - [Lucas dos Santos Padilha](mailto:mateus.lucas1@aluno.ifsp.edu.br)
-  - [mateus.lucas1@aluno.ifsp.edu.br](mailto:mateus.lucas1@aluno.ifsp.edu.br)
-- [Mateus Carvalho Lucas](https://github.com/Teuscl)
   - [lucas.padilha@aluno.ifsp.edu.br](https://github.com/lucasdspadilha)
+- [Mateus Carvalho Lucas](https://github.com/Teuscl)
+  - [mateus.lucas1@aluno.ifsp.edu.br](mailto:mateus.lucas1@aluno.ifsp.edu.br)
 - [Victor Probio Lopes](https://github.com/VictorPLopes)
   - [victor.probio@aluno.ifsp.edu.br](mailto:victor.probio@aluno.ifsp.edu.br)
 
